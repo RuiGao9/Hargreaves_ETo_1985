@@ -2,6 +2,7 @@ LICENSE
 README.md
 pyproject.toml
 src/py_eto/__init__.py
+src/py_eto/fao56.py
 src/py_eto/hargreaves.py
 src/py_eto/helpers.py
 src/py_eto.egg-info/PKG-INFO

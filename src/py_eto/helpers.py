@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def calc_ra(latitude, doy, year):
     """
     Calculate extraterrestrial radiation (Ra)

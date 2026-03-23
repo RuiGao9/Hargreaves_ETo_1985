@@ -3,6 +3,42 @@
 
 # A Python Toolkit for Reference Evapotranspiration ($ET_o$) Calculation Directly from Pandas DataFrames
 
+## FAO-56 Penman-Monteith Method (daily)
+$$ET_o=\frac{0.408\cdot \Delta (R_n-G)+\gamma \frac{C_n}{T+273} u_2 (e_s-e_a)}
+{\Delta + \gamma (1+ C_d\cdot u_2)}$$
+where:<br>
+- $ET_o$: reference ET (mm/day) 
+- ---
+- $T$: air temperature at 2 m height ($\degree C$), `required input`
+- $u_2$: wind speed at 2 m height ($m/s$), `required input`
+- $R_n$: net radiation at crop surface ($MJ/m^2/day$), `required input` 
+- ---
+- $G$: soil heat flux ($MJ/m^2/day$), usually ~0 for daily time step, `optional input`
+- --- 
+- $e_s$: saturation vapor pressure ($kPa$), `optional input` 
+- $e_a$: actual vapor pressure ($kPa$), `optional input` 
+- ---
+- $\Delta$: slope of the saturation vapor pressure curve ($kPa/\degree C$), `can be calculated`
+- $\gamma$: psychrometric constant ($kPa/\degree C$), `can be calculated`
+- ---
+- $C_n, C_d$: they are parameters which can be found in the [Table 8-1](https://doi.org/10.1061/9780784414057) below. For California (e.g., CIMIS), the short-reference parameter is used: $C_n=900, C_d=0.34$
+![alt text](image.png)
+
+### Calculation of the slope of the saturation vapor pressure curve ($kPa/\degree C$)
+$$\Delta=\frac{4098~e_s(T)}{(T+237.3)^2}$$
+where:
+- $T$: mean daily air temperature ($\degree C$), `required input`
+- $e_s(T)$: saturation vapor pressure at temperature T ($\degree C$), in $kPa$, `can be calculated` as below
+
+### Calculation of the saturation and actual vapor pressure ($kPa$)
+$$e_s(T)=0.6108e^{\frac{17.27\cdot T}{T+237.3}}$$
+
+$$e_a(T)=e_s(T)\cdot \frac{RH}{100}$$ 
+
+where the $RH$: relative humidity (%), `required input`
+
+### Calculation of the psychrometric constant
+ 
 
 ## Reference
 - Task Committee on Revision of Manual 70. (2016, April). Evaporation, evapotranspiration, and irrigation water requirements. American Society of Civil Engineers.

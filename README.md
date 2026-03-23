@@ -42,6 +42,7 @@ where:
 - $e_s(T)$: saturation vapor pressure at temperature T ($\degree C$), in $kPa$, `can be calculated` as below
 
 ### Calculation of the saturation and actual vapor pressure ($kPa$)
+
 $$e_s(T)=0.6108e^{\frac{17.27 \cdot T}{T+237.3}}$$
 
 $$e_a(T)=e_s(T) \cdot \frac{RH}{100}$$ 
@@ -49,13 +50,17 @@ $$e_a(T)=e_s(T) \cdot \frac{RH}{100}$$
 where the $RH$: relative humidity (%), `required input`
 
 ### Calculation of the psychrometric constant ($kPa/^\circ C$)
+
 $$\gamma=\frac{c_p\cdot P}{\epsilon \cdot \lambda}$$ 
+
 where:
 - $c_p$: specific heat of moist air, $~1.013 \times 10^{-3}MJ/kg/^\circ C$
 - $\epsilon$: the ratio of molecular weight of water vapor to dry air, $~0.622$
 - $\lambda$: the latent heat of vaporization, $2.45~MJ/kg$
 - $P$: atmospheric pressure (kPa), `optional input`
+
 $$P=101.3\times{\frac{293-0.0065\times h}{293}}^{5.26}$$
+
 - $h$: meters above sea level (m), `required input`
 
 ## Hargreaves Method (daily)

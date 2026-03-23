@@ -25,6 +25,7 @@ where:<br>
 <p align="center">
 <img src="Figures/Table8-1.png" width="350" title="Table 8-1">
 </p>
+
 <p align="center">
 <img src="Figures/PM-ETo.PNG" width="350" title="FAO-56">
 
@@ -32,8 +33,7 @@ where:<br>
 </p>
 
 ### Calculation of the slope of the saturation vapor pressure curve ($kPa/\degree C$)
-
-$$\Delta=\frac{4098~e_s(T)}{(T+237.3)^2}$$
+$$\Delta=\frac{4098\cdot e_s(T)}{(T+237.3)^2}$$
 
 where:
 - $T$: mean daily air temperature ($\degree C$), `required input`

@@ -34,7 +34,7 @@ where:<br>
 
 ### Calculation of the slope of the saturation vapor pressure curve ($kPa/\degree C$)
 
-$$\Delta=\frac{4098\cdot e_s(T)}{(T+237.3)^2}$$
+$$\Delta=\frac{4098 \cdot e_s(T)}{(T+237.3)^2}$$
 
 where:
 - $T$: mean daily air temperature ($\degree C$), `required input`

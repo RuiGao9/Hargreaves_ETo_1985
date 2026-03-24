@@ -3,7 +3,7 @@
 
 # A Python Toolkit for Reference Evapotranspiration ($ET_o$) Calculation Directly from Pandas DataFrames
 
-## FAO-56 Penman-Monteith Method (daily)
+## FAO-56 Penman-Monteith Method (Daily)
 $$ET_o=\frac{0.408\cdot \Delta (R_n-G)+\gamma \frac{C_n}{T+273} u_2 (e_s-e_a)}
 {\Delta + \gamma (1+ C_d\cdot u_2)}$$
 where:<br>
@@ -63,6 +63,12 @@ $$P=101.3\times{\frac{293-0.0065\times h}{293}}^{5.26}$$
 
 - $h$: meters above sea level (m), `required input`
 
+## FAO-56 Penman-Monteith Method (Hourly)
+The physical framework remains consistent with the daily step. The difference are listed below:
+- **Dynamic Aerodynamic Coefficients ($C_n$ and $C_d$):** These parameters are adjusted based on the reference crop type (short - grass vs. tall - alfalfa) and prevailing radiation conditions ([Table 8-1](https://doi.org/10.1061/9780784414057)).
+- **Diurnal Partitioning via Net Radiation ($R_n$):** The sign and magnitude of $R_n$ are utilized as the primary threshold to differentiate between daytime ($R_n > 0$) and nighttime ($R_n \le 0$) conditions. 
+- **Ground Heat Flux ($G$) as One Optional Input:** The model provides the flexibility to utilize either measured or estimated soil heat flux data. If $G$ is directly monitored (e.g., via heat flux plates), the function prioritizes these observations for higher precision. In the absence of ground measurements, the model automatically estimates $G$ as a dynamic fraction of net radiation ($R_n$), applying distinct scaling factors for daytime and nighttime to capture the diurnal energy exchange between the surface and the subsurface.
+ 
 ## Hargreaves Method (daily)
 
 $$ETo=0.0023 \cdot R_a \cdot (T_{c}+17.8) \cdot \sqrt{T_{max} - T_{min}}$$

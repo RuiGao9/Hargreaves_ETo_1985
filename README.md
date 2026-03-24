@@ -2,6 +2,75 @@
 ![Visitors Badge](https://visitor-badge.laobi.icu/badge?page_id=RuiGao9/py=et-123)<br>
 
 # A Python Toolkit for Reference Evapotranspiration ($ET_o$) Calculation Directly from Pandas DataFrames
+This repository provides a standardized Python implementation for estimating reference evapotranspiration ($ET_o$) using two primary methodologies: the ASCE Penman-Monteith (PM) model—supporting both daily and hourly temporal resolutions—and the Hargreaves-Samani empirical equation. Designed for seamless integration with user-provided Pandas DataFrames, the toolkit can be used based on the meteorological data from traditional weather stations or high-frequency observations derived from eddy-covariance flux towers. <br>
+
+This documentation is structured into two main sections:
+- **Functional Guide:** A practical overview of how to import, call, and implement the core functions for $ET_o$ calculation within your research workflow.
+- **Theoretical Framework:** A detailed technical reference covering the underlying physical formulas, coefficient derivations, required inputs, etc. for each supported method.
+
+
+## How To Use This Repository?
+### Repository installation
+```bash
+pip install "git+https://github.com/RuiGao9/py-eto.git" 
+```
+
+### Import functions
+The `examples/eto_playground.ipynb` notebook provides a comprehensive implementation of reference evapotranspiration ($ET_o$) estimation. It demonstrates workflows for the ASCE Penman-Monteith method (at both daily and hourly resolutions) and the Hargreaves-Samani empirical model.<br>
+To get started, initialize the environment by importing the core modules:
+```python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+import py_eto
+from py_eto import helpers
+from py_eto.helpers import calc_es_ea, calc_gamma, calc_pressure, calc_delta, convert_energy
+```
+
+### Daily PM-ETo
+Preparing a dataframe and feed it to the `py_eto.pm_daily` funciton:
+```python
+df['ETo_PM_Daily'] = py_eto.pm_daily(
+    t_mean=df['T'], 
+    u2=df['u2'], 
+    rn=convert_energy(df['Rn']),
+    g=df['G'], 
+    es=calc_es_ea(df['T'], df['RH'])[0], 
+    ea=calc_es_ea(df['T'], df['RH'])[1],
+    delta=calc_delta(df['T']),
+    gamma=calc_gamma(calc_pressure(df['Elevation']), t_mean=df['T']),
+    reference='short',
+)
+```
+
+### Hourly PM-ETo
+Preparing a dataframe and feed it to the `py_eto.pm_hourly` funciton:
+```python
+df['ETo_PM_Hourly'] = py_eto.pm_hourly(
+    t_hr=df['T'], 
+    u2_hr=df['u2'], 
+    rn_hr=convert_energy(df['Rn']),
+    es_hr=calc_es_ea(df['T'], df['rh_hr'])[0],
+    ea_hr=calc_es_ea(df['T'], df['rh_hr'])[1],
+    delta_hr=calc_delta(df['T']),
+    gamma_hr=calc_gamma(calc_pressure(df['Elevation']), t_mean=df['T']),
+    g_hr=convert_energy(df['G']), 
+    reference='short',
+)
+```
+
+### Hargreaves-ETo
+Preparing a dataframe and feed it to the `py_eto.hargreaves` funciton:
+```python
+df['ETo_Hargreaves'] = py_eto.hargreaves(
+    t_min=df['Tmin'],
+    t_max=df['Tmax'],
+    latitude=df['Latitude'],
+    doy=df['DOY'],
+    year=2025
+)
+```
 
 ## FAO-56 Penman-Monteith Method (Daily)
 $$ET_o=\frac{0.408\cdot \Delta (R_n-G)+\gamma \frac{C_n}{T+273} u_2 (e_s-e_a)}

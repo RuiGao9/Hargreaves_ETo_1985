@@ -1,5 +1,5 @@
 [project]
-name = "py-eto"
+name = "pyETo"
 version = "0.1.0"
 description = "A Python library for Reference Evapotranspiration (ETo) calculation"
 authors = [

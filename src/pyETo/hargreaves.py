@@ -25,4 +25,4 @@ def hargreaves(t_min, t_max, latitude, doy, year=2024):
     # 0.408 is used to convert energy units (MJ/m2/d) to depth units (mm/d)
     eto = 0.0023 * (t_mean + 17.8) * np.sqrt(tdiff) * (0.408 * ra)
     
-    return eto
+    return eto, ra
